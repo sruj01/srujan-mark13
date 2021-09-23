@@ -116,6 +116,55 @@
     return [ctrN, nextDate];
   }
 
+  function getPreviousDate(date){
+    var day = date.day - 1;
+    var month = date.month;
+    var year = date.year;
+    var daysInMonth = [31,28,31,30,31,30,31,31,30,31,30,31];
+    if(month-1 ===2){
+      if(isLeapYear(year)){
+        if(day ===0){
+          day = 29;
+          month--;
+        }
+      }
+      else{
+        if(day === 0){
+          day = 28;
+          month--;
+        }
+      }
+    }
+    else{
+      if(day ===0){
+        day = daysInMonth[month-2];
+        month--;
+      }
+    }
+    if(month ===0){
+      month = 12;
+      year--;
+    }
+    return{
+      day: day,
+      month: month,
+      year: year
+    };
+  }
+
+  function getPreviousPalindromeDate(date){
+    var ctrP = 0;
+    var previousDate = getPreviousDate(date);
+    while(1){
+      ctrP++;
+      var isPalindrome = checkPalindromeForAllDateFormats(previousDate);
+      if(isPalindrome){
+        break;
+      }
+      previousDate = getPreviousDate(previousDate);
+    }
+    return [ctrP, previousDate];
+  }
 
 
 var dateInputRef = document.querySelector("#bday-input");
@@ -140,11 +189,18 @@ function clickHandler(e){
       }
       else{
         var [ctrN, nextDate] = getNextPalindromeDate(date);
-        resultRef.innerText = "Sorry☹️\t Your birthdate is not a Palindrome. The next Palindrome date succeeding your dob was " + nextDate.day +"-"+ nextDate.month +"-"+ nextDate.year + ",  you missed it by " +ctrN+ " day(s)";
+        var [ctrP, previousDate] = getPreviousPalindromeDate(date);
+        if(ctrN < ctrP){
+          resultRef.innerText = "Sorry☹️\t Your birthday is not a Palindrome. The next Palindrome date succeeding your dob was " + nextDate.day +"-"+ nextDate.month +"-"+ nextDate.year + ", you missed it by " +ctrN+ " day(s)";
+        }
+        else if(ctrN === ctrP){
+          resultRef.innerText = "Sorry☹️\t Your birthday is not a Palindrome. You missed 2 palindrome dates equally far away from your birth day. They are: " + nextDate.day +"-"+ nextDate.month +"-"+ nextDate.year + " and  " + previousDate.day +"-"+ previousDate.month +"-"+ previousDate.year+". You missed them by " +ctrN+ " day(s)";
+        }
+        else{
+          resultRef.innerText = "Sorry☹️\t Your birthday is not a Palindrome. The closest previous Palindrome date preceding your dob was " + previousDate.day +"-"+ previousDate.month +"-"+ previousDate.year + ", you missed it by " +ctrP+ " day(s)";
+        }
+
       }
-  }
-  else{
-    resultRef.innerText = "Fill the date form"
   }
 }
 
