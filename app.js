@@ -1,5 +1,4 @@
-
-    function reverseStr(str){
+function reverseStr(str){
     var listOfChars  = str.split('');
     var reverseListOfChars = listOfChars.reverse();
     var reversedStr = reverseListOfChars.join('');
@@ -116,6 +115,96 @@
     return [ctrN, nextDate];
   }
 
+  function getPreviousDate(date){
+    var day = date.day - 1;
+    var month = date.month;
+    var year = date.year;
+    var daysInMonth = [31,28,31,30,31,30,31,31,30,31,30,31];
+    if(month-1 ===2){
+      if(isLeapYear(year)){
+        if(day ===0){
+          day = 29;
+          month--;
+        }
+      }
+      else{
+        if(day === 0){
+          day = 28;
+          month--;
+        }
+      }
+    }
+    else{
+      if(day ===0 && month === 1){
+        day = daysInMonth[month + 10];
+        month = month + 11;
+        year--;
+      }
+      else if( day === 0 && month === 2){
+        day = daysInMonth[month - 2];
+        month = month - 1;
+      }
+      else if( day === 0 && month === 3){
+        day = daysInMonth[month - 2];
+        month = month - 1;
+      }
+      else if( day === 0 && month === 4){
+        day = daysInMonth[month - 2];
+        month = month - 1;
+      }
+      else if( day === 0 && month === 5){
+        day = daysInMonth[month - 2];
+        month = month - 1;
+      }
+      else if( day === 0 && month === 6){
+        day = daysInMonth[month - 2];
+        month = month - 1;
+      }
+      else if( day === 0 && month === 7){
+        day = daysInMonth[month - 2];
+        month = month - 1;
+      }
+      else if( day === 0 && month === 8){
+        day = daysInMonth[month - 2];
+        month = month - 1;
+      }
+      else if( day === 0 && month === 9){
+        day = daysInMonth[month - 2];
+        month = month - 1;
+      }
+      else if( day === 0 && month === 10){
+        day = daysInMonth[month - 2];
+        month = month - 1;
+      }
+      else if( day === 0 && month === 11){
+        day = daysInMonth[month - 2];
+        month = month - 1;
+      }
+      else if( day === 0 && month === 12){
+        day = daysInMonth[month - 2];
+        month = month - 1;
+      }
+    }
+    return{
+      day: day,
+      month: month,
+      year: year
+    };
+  }
+
+  function getPreviousPalindromeDate(date){
+    var ctrP = 0;
+    var previousDate = getPreviousDate(date);
+    while(1){
+      ctrP++;
+      var isPalindrome = checkPalindromeForAllDateFormats(previousDate);
+      if(isPalindrome){
+        break;
+      }
+      previousDate = getPreviousDate(previousDate);
+    }
+    return [ctrP, previousDate];
+  }
 
 
 var dateInputRef = document.querySelector("#bday-input");
@@ -140,11 +229,18 @@ function clickHandler(e){
       }
       else{
         var [ctrN, nextDate] = getNextPalindromeDate(date);
-        resultRef.innerText = "Sorry☹️\t Your birthdate is not a Palindrome. The next Palindrome date succeeding your dob was " + nextDate.day +"-"+ nextDate.month +"-"+ nextDate.year + ",  you missed it by " +ctrN+ " day(s)";
+        var [ctrP, previousDate] = getPreviousPalindromeDate(date);
+        if(ctrN < ctrP){
+          resultRef.innerText = "Sorry☹️\t Your birthday is not a Palindrome. The next Palindrome date closest to your dob is " + nextDate.day +"-"+ nextDate.month +"-"+ nextDate.year + ", you missed it by " +ctrN+ " day(s)";
+        }
+        else if(ctrN === ctrP){
+          resultRef.innerText = "Sorry☹️\t Your birthday is not a Palindrome. You missed 2 palindrome dates equally far away from your birth day. They are: " + nextDate.day +"-"+ nextDate.month +"-"+ nextDate.year + " and  " + previousDate.day +"-"+ previousDate.month +"-"+ previousDate.year+". You missed them by " +ctrN+ " day(s)";
+        }
+        else{
+          resultRef.innerText = "Sorry☹️\t Your birthday is not a Palindrome. The previous Palindrome date closest to your dob was " + previousDate.day +"-"+ previousDate.month +"-"+ previousDate.year + ", you missed it by " +ctrP+ " day(s)";
+        }
+
       }
-  }
-  else{
-    resultRef.innerText = "Fill the date form"
   }
 }
 
