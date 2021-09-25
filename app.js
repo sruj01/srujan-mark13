@@ -242,6 +242,9 @@ function clickHandler(e){
 
       }
   }
+  else{
+    resultRef.innerText = "Enter Birthdate";
+  }
 }
 
 showBtnRef.addEventListener("click", clickHandler);
