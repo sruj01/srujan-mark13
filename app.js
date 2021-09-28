@@ -140,49 +140,14 @@ function reverseStr(str){
         month = month + 11;
         year--;
       }
-      else if( day === 0 && month === 2){
-        day = daysInMonth[month - 2];
-        month = month - 1;
-      }
-      else if( day === 0 && month === 3){
-        day = daysInMonth[month - 2];
-        month = month - 1;
-      }
-      else if( day === 0 && month === 4){
-        day = daysInMonth[month - 2];
-        month = month - 1;
-      }
-      else if( day === 0 && month === 5){
-        day = daysInMonth[month - 2];
-        month = month - 1;
-      }
-      else if( day === 0 && month === 6){
-        day = daysInMonth[month - 2];
-        month = month - 1;
-      }
-      else if( day === 0 && month === 7){
-        day = daysInMonth[month - 2];
-        month = month - 1;
-      }
-      else if( day === 0 && month === 8){
-        day = daysInMonth[month - 2];
-        month = month - 1;
-      }
-      else if( day === 0 && month === 9){
-        day = daysInMonth[month - 2];
-        month = month - 1;
-      }
-      else if( day === 0 && month === 10){
-        day = daysInMonth[month - 2];
-        month = month - 1;
-      }
-      else if( day === 0 && month === 11){
-        day = daysInMonth[month - 2];
-        month = month - 1;
-      }
-      else if( day === 0 && month === 12){
-        day = daysInMonth[month - 2];
-        month = month - 1;
+      else{
+       for(i = 2 ; i <=12; i++ ){
+         if(day === 0 && month === i){
+          day = daysInMonth[month - 2]
+          month = month - 1
+        }
+        console.log("iteration no: ",i)
+        }
       }
     }
     return{
@@ -225,25 +190,24 @@ function clickHandler(e){
       var isPalindrome = checkPalindromeForAllDateFormats(date);
 
       if(isPalindrome){
-        resultRef.innerText = "Your Birthday is a Palindrome";
+        resultRef.innerText = "Cool! Your Birthdate is a Palindrome";
       }
       else{
         var [ctrN, nextDate] = getNextPalindromeDate(date);
         var [ctrP, previousDate] = getPreviousPalindromeDate(date);
         if(ctrN < ctrP){
-          resultRef.innerText = "Sorry☹️\t Your birthday is not a Palindrome. The next Palindrome date closest to your dob is " + nextDate.day +"-"+ nextDate.month +"-"+ nextDate.year + ", you missed it by " +ctrN+ " day(s)";
+          resultRef.innerText = "Sorry☹️\t Your birthdate is not a Palindrome. The next Palindrome date closest to your dob is " + nextDate.day +"-"+ nextDate.month +"-"+ nextDate.year + ", you missed it by " +ctrN+ " day(s)";
         }
         else if(ctrN === ctrP){
-          resultRef.innerText = "Sorry☹️\t Your birthday is not a Palindrome. You missed 2 palindrome dates equally far away from your birth day. They are: " + nextDate.day +"-"+ nextDate.month +"-"+ nextDate.year + " and  " + previousDate.day +"-"+ previousDate.month +"-"+ previousDate.year+". You missed them by " +ctrN+ " day(s)";
+          resultRef.innerText = "Sorry☹️\t Your birthdate is not a Palindrome. You missed 2 palindrome dates equally far away from your birth day. They are: " + nextDate.day +"-"+ nextDate.month +"-"+ nextDate.year + " and  " + previousDate.day +"-"+ previousDate.month +"-"+ previousDate.year+". You missed them by " +ctrN+ " day(s)";
         }
         else{
-          resultRef.innerText = "Sorry☹️\t Your birthday is not a Palindrome. The previous Palindrome date closest to your dob was " + previousDate.day +"-"+ previousDate.month +"-"+ previousDate.year + ", you missed it by " +ctrP+ " day(s)";
+          resultRef.innerText = "Sorry☹️\t Your birthdate is not a Palindrome. The previous Palindrome date closest to your dob was " + previousDate.day +"-"+ previousDate.month +"-"+ previousDate.year + ", you missed it by " +ctrP+ " day(s)";
         }
-
       }
   }
   else{
-    resultRef.innerText = "Enter Birthdate";
+    resultRef.innerText = "Field is empty";
   }
 }
 

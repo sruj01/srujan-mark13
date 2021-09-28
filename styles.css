@@ -27,7 +27,9 @@ body{
 }
 
 #label-style{
-  font-weight: bolder;
+  font-weight: lighter;
+  display: block;
+  padding-bottom: 0.5rem;
 }
 
 #source-code{
